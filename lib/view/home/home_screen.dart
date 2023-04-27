@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:user_app/controller/user_controller.dart';
 import 'package:user_app/model/user_model.dart';
+import 'package:user_app/view/detail/detail_screen.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -11,28 +12,39 @@ class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var data = ref.watch(userProvider);
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF0a0f00),
-        centerTitle: true,
-        title: const Text('User Data'),
-      ),
-      body: data.when(
-        data: (data) => buildBody(data),
-        error: (error, stackTrace) => Text(error.toString()),
-        loading: () => const Center(
-          child: CircularProgressIndicator(),
+    return RefreshIndicator(
+      onRefresh: () async {
+        ref.invalidate(userProvider);
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: const Color(0xFF0a0f00),
+          centerTitle: true,
+          title: const Text('User Data'),
+        ),
+        body: data.when(
+          data: (data) => buildBody(data, context),
+          error: (error, stackTrace) => Text(error.toString()),
+          loading: () => const Center(
+            child: CircularProgressIndicator(),
+          ),
         ),
       ),
     );
   }
 
-  ListView buildBody(List<UserModel> data) {
+  ListView buildBody(List<UserModel> data, BuildContext context) {
     return ListView.separated(
       separatorBuilder: (context, index) => const SizedBox(height: 12),
       padding: const EdgeInsets.symmetric(horizontal: 26, vertical: 18),
       itemBuilder: (_, index) => InkWell(
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => DetailScreen(data: data[index]),
+              ));
+        },
         child: Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
@@ -46,20 +58,20 @@ class HomeScreen extends ConsumerWidget {
               children: [
                 Text(
                   data[index].name,
-                  style: TextStyle(
+                  style: const TextStyle(
                       color: Colors.black,
                       fontSize: 18,
                       fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Text(
                   data[index].email,
-                  style: TextStyle(color: Colors.black, fontSize: 16),
+                  style: const TextStyle(color: Colors.black, fontSize: 16),
                 ),
-                SizedBox(height: 6),
+                const SizedBox(height: 6),
                 Text(
                   data[index].phone,
-                  style: TextStyle(color: Colors.black, fontSize: 16),
+                  style: const TextStyle(color: Colors.black, fontSize: 16),
                 ),
               ],
             ),

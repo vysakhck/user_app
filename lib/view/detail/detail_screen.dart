@@ -12,7 +12,7 @@ class DetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: const Color(0xFF0a0f00),
         title: const Text('User Details'),
         centerTitle: true,
       ),
@@ -23,7 +23,7 @@ class DetailScreen extends StatelessWidget {
               side: const BorderSide(
                 width: 1,
               ),
-              borderRadius: BorderRadius.circular(20)),
+              borderRadius: BorderRadius.circular(16)),
           child: SizedBox(
             width: double.infinity,
             child: Padding(
@@ -39,7 +39,7 @@ class DetailScreen extends StatelessWidget {
                         fontSize: 24,
                         fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 16),
                   Text(
                     'Email : ${data.email}',
                     style: const TextStyle(
@@ -47,7 +47,7 @@ class DetailScreen extends StatelessWidget {
                         fontSize: 20,
                         fontWeight: FontWeight.normal),
                   ),
-                  SizedBox(height: 6),
+                  const SizedBox(height: 10),
 
                   Text(
                     'Phone : ${data.phone}',
@@ -56,14 +56,16 @@ class DetailScreen extends StatelessWidget {
                         fontSize: 20,
                         fontWeight: FontWeight.normal),
                   ),
-                  SizedBox(height: 6),
-                  Text(
+                  const SizedBox(height: 10),
+                  const Text(
                     'Address : ',
-                    style: const TextStyle(
+                    style: TextStyle(
                         color: Colors.black,
                         fontSize: 20,
                         fontWeight: FontWeight.normal),
                   ),
+                  const SizedBox(height: 6),
+
                   Text(
                     '${data.address.city},',
                     style: const TextStyle(
@@ -71,6 +73,7 @@ class DetailScreen extends StatelessWidget {
                         fontSize: 20,
                         fontWeight: FontWeight.normal),
                   ),
+                  const SizedBox(height: 6),
                   Text(
                     '${data.address.street},',
                     style: const TextStyle(
@@ -78,6 +81,7 @@ class DetailScreen extends StatelessWidget {
                         fontSize: 20,
                         fontWeight: FontWeight.normal),
                   ),
+                  const SizedBox(height: 6),
                   Text(
                     '${data.address.suite},',
                     style: const TextStyle(
@@ -85,6 +89,7 @@ class DetailScreen extends StatelessWidget {
                         fontSize: 20,
                         fontWeight: FontWeight.normal),
                   ),
+                  const SizedBox(height: 6),
                   Text(
                     data.address.zipcode,
                     style: const TextStyle(
