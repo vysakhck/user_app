@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:user_app/model/user_model.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:pretty_qr_code/pretty_qr_code.dart';
+import 'package:qr_flutter/qr_flutter.dart';
+import 'package:user_app/extensions/context_extensions.dart';
+
+import '../../model/user_model.dart';
 
 class DetailScreen extends StatelessWidget {
   final UserModel data;
@@ -10,111 +17,106 @@ class DetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = context.screenSize;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFF0a0f00),
+        backgroundColor: Colors.transparent,
         title: const Text('User Details'),
         centerTitle: true,
+        elevation: 0,
+        foregroundColor: Colors.grey[900],
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-        child: Card(
-          shape: RoundedRectangleBorder(
-              side: const BorderSide(
-                width: 1,
-              ),
-              borderRadius: BorderRadius.circular(16)),
-          child: SizedBox(
-            width: double.infinity,
-            child: Padding(
-              padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            SizedBox(
+              height: size.height * 0.25,
+              width: size.width,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  SizedBox(
+                    width: 96,
+                    height: 96,
+                    child: CircleAvatar(
+                      backgroundColor: Colors.grey[900],
+                      child: Image.network(
+                        'https://api.dicebear.com/6.x/adventurer/png?seed=${data.name}',
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
                   Text(
-                    'Name : ${data.name}',
-                    style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold),
+                    data.name,
+                    style: context.textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 4),
                   Text(
-                    'Email : ${data.email}',
-                    style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.normal),
+                    data.email,
+                    style: context.textTheme.bodyLarge
+                        ?.copyWith(color: Colors.grey),
                   ),
-                  const SizedBox(height: 10),
-
+                  const SizedBox(height: 4),
                   Text(
-                    'Phone : ${data.phone}',
-                    style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.normal),
-                  ),
-                  const SizedBox(height: 10),
-                  const Text(
-                    'Address : ',
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.normal),
-                  ),
-                  const SizedBox(height: 6),
-
-                  Text(
-                    '${data.address.city},',
-                    style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.normal),
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    '${data.address.street},',
-                    style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.normal),
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    '${data.address.suite},',
-                    style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.normal),
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    data.address.zipcode,
-                    style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.normal),
-                  ),
-                  // Text(
-                  //   data.address.geo.lat,
-                  //   style: TextStyle(
-                  //       color: Colors.black,
-                  //       fontSize: 20,
-                  //       fontWeight: FontWeight.bold),
-                  // ),
-                  // Text(
-                  //   data.address.geo.lng,
-                  //   style: TextStyle(
-                  //       color: Colors.black,
-                  //       fontSize: 20,
-                  //       fontWeight: FontWeight.bold),
-                  // ),
+                    data.phone,
+                    style: context.textTheme.bodyLarge
+                        ?.copyWith(color: Colors.grey),
+                  )
                 ],
               ),
             ),
-          ),
+            Container(
+              width: size.width,
+              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+              decoration: BoxDecoration(
+                color: Colors.blueGrey[50],
+                borderRadius: BorderRadius.circular(24),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Address',
+                    style: context.textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    '${data.address.suite}, ${data.address.city}, ${data.address.street}',
+                    style: context.textTheme.bodyLarge
+                        ?.copyWith(color: Colors.grey),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    'Zip code: ${data.address.zipcode}',
+                    style: context.textTheme.bodyLarge
+                        ?.copyWith(color: Colors.grey),
+                  )
+                ],
+              ),
+            ),
+            const SizedBox(height: 16),
+            Container(
+                width: size.width,
+                padding:
+                    const EdgeInsets.symmetric(vertical: 32, horizontal: 24),
+                decoration: BoxDecoration(
+                  color: Colors.blueGrey[50],
+                  borderRadius: BorderRadius.circular(24),
+                ),
+                child: Center(
+                  child: PrettyQr(
+                    data: data.id.toString(),
+                    size: 256,
+                    roundEdges: true,
+                  ),
+                ))
+          ],
         ),
       ),
     );

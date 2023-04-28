@@ -38,6 +38,9 @@ dependencies:
   flutter_riverpod: ^2.3.6
   dio: ^5.1.1
   rive_splash_screen: ^0.1.1
+  google_fonts: ^4.0.4
+  qr_flutter: ^4.0.0
+  pretty_qr_code: ^2.0.2
 
 dev_dependencies:
   flutter_test:
