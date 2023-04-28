@@ -51,8 +51,8 @@ class HomeScreen extends ConsumerWidget {
               Container(
                 clipBehavior: Clip.antiAlias,
                 margin: const EdgeInsets.all(16),
-                height: 72,
-                width: 72,
+                height: 60,
+                width: 60,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                 ),
@@ -76,12 +76,12 @@ class HomeScreen extends ConsumerWidget {
                     const SizedBox(height: 10),
                     Text(
                       data[index].email,
-                      style: const TextStyle(color: Colors.black, fontSize: 16),
+                      style: const TextStyle(color: Colors.black, fontSize: 14),
                     ),
                     const SizedBox(height: 6),
                     Text(
                       data[index].phone,
-                      style: const TextStyle(color: Colors.black, fontSize: 16),
+                      style: const TextStyle(color: Colors.black, fontSize: 14),
                     ),
                   ],
                 ),
